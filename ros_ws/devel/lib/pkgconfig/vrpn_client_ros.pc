@@ -1,8 +1,0 @@
-prefix=/home/ica/MACDLab_Exp/ros_ws/devel
-
-Name: vrpn_client_ros
-Description: Description of vrpn_client_ros
-Version: 0.0.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 
