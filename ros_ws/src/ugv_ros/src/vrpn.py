@@ -24,8 +24,8 @@ if __name__ == '__main__':
     try:
         rospy.init_node('vrpn', anonymous=False)
         rate = rospy.Rate(10) # 10Hz
-        pub1 = rospy.Publisher('/ugv01/odom', PoseStamped, queue_size=100)
-        pub2 = rospy.Publisher('/ugv02/odom', PoseStamped, queue_size=100)
+        pub1 = rospy.Publisher('/vrpn_client_node/ugv01/pose', PoseStamped, queue_size=100)
+        pub2 = rospy.Publisher('/vrpn_client_node/ugv02/pose', PoseStamped, queue_size=100)
         pose = PoseStamped()
         pose1 = msg_PoseStamped(pose, [1.0, 1.0, 0.0])
         while not rospy.is_shutdown():

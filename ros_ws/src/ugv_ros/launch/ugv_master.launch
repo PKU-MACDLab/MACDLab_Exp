@@ -4,11 +4,13 @@
   <node pkg="ugv_ros" type="vrpn.py" name="vrpn" output="screen"/>
   
   <group ns="ugv01">
+  <param name="id" value="ugv01" />
     <node pkg="ugv_ros" type="ugv.py" name="controller" output="screen" />
     <node pkg="ugv_ros" type="listener.py" name="hardware" output="screen" />
   </group>
 
   <group ns="ugv02">
+    <param name="id" value="ugv02" />
     <node pkg="ugv_ros" type="ugv.py" name="controller" output="screen" />
     <node pkg="ugv_ros" type="listener.py" name="hardware" output="screen" />
   </group>

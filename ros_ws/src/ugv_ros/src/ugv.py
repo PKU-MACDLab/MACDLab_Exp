@@ -42,9 +42,8 @@ class Ugv(object):
         
         self.posePub = rospy.Publisher('pose', xyyaw_pose, queue_size=100)
         self.poseMsg = xyyaw_pose()
-        # self.pose_current = [self.poseMsg.x, self.poseMsg.y, self.poseMsg.yaw]
+        self.pose_current = [self.poseMsg.x, self.poseMsg.y, self.poseMsg.yaw]
         self.goal_past = None
-        self.getPose()
         self.cmdVelPub = rospy.Publisher("cmd_vel", Twist, queue_size=100)
         self.cmdVelMsg = Twist()
 
@@ -90,7 +89,7 @@ class Ugv(object):
         self.turn_and_forward(self.goal)
         return GoToResponse('Arrived')
 
-    def turn_and_forward(self, goal, final_rotation=False):
+    def turn2forward(self, goal, final_rotation=False):
         """
         Motion mode:turn and forward.
             Velocity is 0.2 m/s.
@@ -188,6 +187,7 @@ class Ugv(object):
         self.poseMsg.y = data.pose.position.y
         self.poseMsg.yaw = 2*np.arctan(data.pose.orientation.z/data.pose.orientation.w)
         self.pose_current = [self.poseMsg.x, self.poseMsg.y, self.poseMsg.yaw]
+        self.posePub.publish(self.poseMsg)
 
     def goal_callback(self, data):
         # print('Goal pose is ' + str(data))
@@ -196,7 +196,7 @@ class Ugv(object):
             # print('goal: ' + str(self.goal))
             # print('goal_past: ' + str(self.goal_past))
             # self.egoRun(self.goal)
-            self.turn_and_forward(self.goal)
+            self.turn2forward(self.goal)
             self.goal_past = self.goal
         else:
             print('===========================\n'+
@@ -213,9 +213,10 @@ if __name__ == '__main__':
         ugv = Ugv()
 
         while not rospy.is_shutdown():
-            # rospy.Subscriber('/vrpn_client_node/%s/pose' %id, PoseStamped, ugv.pose_callback)
+            rospy.Subscriber('/vrpn_client_node/%s/pose' %ugv.id, PoseStamped, ugv.pose_callback)
+            # ugv.getPose()
             rospy.Subscriber('goal', xyyaw_pose, ugv.goal_callback)
-            ugv.getPose()
+
             ugv.rate.sleep()
 
     except rospy.ROSInterruptException:
