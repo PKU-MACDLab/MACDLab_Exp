@@ -1,0 +1,18 @@
+UGVs:
+- id: 1
+  initialPosition:
+  - 0.0
+  - 0.0
+  type: Differential
+
+- id: 2
+  initialPosition:
+  - 0.0
+  - 0.5
+  type: Mecanum
+
+- id: 3
+  initialPosition:
+  - 0.0
+  - 1.0
+  type: Ackermann

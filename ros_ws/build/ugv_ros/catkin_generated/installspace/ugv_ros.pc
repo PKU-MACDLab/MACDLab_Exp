@@ -1,0 +1,8 @@
+prefix=/home/ica/MACDLab_Exp/ros_ws/install
+
+Name: ugv_ros
+Description: Description of ugv_ros
+Version: 0.0.0
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib 
+Requires: roscpp rospy std_msgs message_runtime
