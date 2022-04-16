@@ -6,27 +6,18 @@ from numpy.linalg import solve
 import numpy as np
 
 
-k1 = 1
-k2 = 5
-def transformation(current_pose, goal_pose):
+
+def control_command_egorun(current_pose, goal_pose):
+    k1 = 1
+    k2 = 3
     r = ((current_pose[0] - goal_pose[0])**2 + (current_pose[1] - goal_pose[1])**2)**0.5
     alpha = np.arctan2(goal_pose[1] - current_pose[1], goal_pose[0] - current_pose[0])
     theta = (goal_pose[2] - alpha + np.pi) % (2*np.pi) - np.pi
     delta = (current_pose[2] - alpha + np.pi) % (2*np.pi) - np.pi
-    return r, theta, delta
-    
-def control_command_egorun(current_pose, goal_pose):
-    
-    r , theta, delta = transformation(current_pose, goal_pose)
     velocity = 0.2
     yaw_velocity = (-velocity/r)*(k2*(delta-np.arctan(-k1*theta))+(1+k1/(1+(k1*theta)**2))*np.sin(delta))                              
     
     return velocity, yaw_velocity
-
-def dist(pose1, pose2):
-    r, phi, delta = transformation(pose1, pose2)
-    distance = (r**2+(k1*phi)**2)**0.5 + k2*abs(delta - np.arctan(-k1*phi))
-    return distance
 
 class Controller:
     def __init__(self, K_rho, K_alpha, K_beta):
