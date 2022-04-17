@@ -28,9 +28,12 @@ if __name__ == '__main__':
         pub2 = rospy.Publisher('/vrpn_client_node/ugv02/pose', PoseStamped, queue_size=100)
         pose = PoseStamped()
         pose1 = msg_PoseStamped(pose, [1.0, 1.0, 0.0])
+        pose2 = msg_PoseStamped(pose, [1.5, 1.0, 0.0])
         while not rospy.is_shutdown():
             pub1.publish(pose1)
+            pub2.publish(pose2)
             # rospy.loginfo("Position!")
+            
             rate.sleep()
 
     except rospy.ROSInterruptException:

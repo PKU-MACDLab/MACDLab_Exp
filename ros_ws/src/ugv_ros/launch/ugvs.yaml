@@ -4,15 +4,18 @@ UGVs:
   - 0.0
   - 0.0
   type: Differential
+  motion: turn2Forward
 
 - id: 2
   initialPosition:
   - 0.0
   - 0.5
   type: Mecanum
+  motion: xy
 
 - id: 3
   initialPosition:
   - 0.0
   - 1.0
   type: Ackermann
+  motion: egoRun
