@@ -199,25 +199,30 @@ class Ugv(object):
     def goToSrv(self, req):
         self.goal = [req.x, req.y, req.yaw]
         print('\n======== Start moving ========',
-                '\n== ID: %s  Motion: %s  (Service)' %(self.id, self.motion))
+              '\n== ID: %s  Motion: %s  (Service)' %(self.id, self.motion))
         if self.goal != self.goal_past:
-            if self.motion == 'turn2Forward':
-                thread = threading.Thread(name=self.id, target=self.turn2Forward, args=(self.goal,))
-                thread.start()
-            elif self.motion == 'egoRun':
-                thread = threading.Thread(name=self.id, target=self.egoRun, args=(self.goal,))
-                thread.start()
-            else:
-                self.thread_test.start()
             self.goal_past = self.goal
+            if self.motion == 'turn2Forward':
+                self.turn2Forward(self.goal)
+                return GoToResponse('Arrived')
+                # thread = threading.Thread(name=self.id, target=self.turn2Forward, args=(self.goal,))
+                # thread.start()
+            elif self.motion == 'egoRun':
+                self.egoRun(self.goal)
+                return GoToResponse('Arrived')
+                # thread = threading.Thread(name=self.id, target=self.egoRun, args=(self.goal,))
+                # thread.start()
+            else:
+                self.test(self.goal)
+                return GoToResponse('Tested')
         else:
             print('\n======== Already arrived ========',
                   '\n== ID: %s  Motion: %s  (Service)' %(self.id, self.motion))
-        return GoToResponse('Arrived')
+            return GoToResponse('Stay')
 
     def stopSrv(self):
         print('\n======== Stop moving ========',
-                '\n== ID: %s  Motion: %s  (Service)' %(self.id, self.motion))
+              '\n== ID: %s  Motion: %s  (Service)' %(self.id, self.motion))
         self.cmdVelocity(np.zeros(2), 0.0)
         rospy.sleep(0.5)
         return StopResponse('Stopped')
@@ -225,7 +230,7 @@ class Ugv(object):
     def goToAct(self, goal):
         self.goal = [goal.x, goal.y, goal.yaw]
         print('\n======== Start moving ========',
-                '\n== ID: %s  Motion: %s  (Action)' %(self.id, self.motion))
+              '\n== ID: %s  Motion: %s  (Action)' %(self.id, self.motion))
         if self.goal != self.goal_past:
             if self.motion == 'turn2Forward':
                 self.turn2Forward(self.goal)

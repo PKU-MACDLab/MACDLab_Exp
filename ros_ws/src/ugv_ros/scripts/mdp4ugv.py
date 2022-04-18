@@ -79,7 +79,6 @@ if __name__ == '__main__':
             rate.sleep()
             
         print('\n==== Stop ====')
-        
         stopAct1.wait_for_server()
         stopAct1.send_goal('None')
 

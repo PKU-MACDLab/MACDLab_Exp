@@ -7,14 +7,14 @@
     <param name="id" value="ugv01" />
     <param name="motion" value="None" />
     <node pkg="ugv_ros" type="ugv.py" name="server" output="screen" />
-    <node pkg="ugv_ros" type="listener.py" name="hardware" output="screen" />
+    <node pkg="ugv_ros" type="hardware.py" name="hardware" output="screen" />
   </group>
 
   <group ns="ugv02">
     <param name="id" value="ugv02" />
     <param name="motion" value="None" />
     <node pkg="ugv_ros" type="ugv.py" name="server" output="screen" />
-    <node pkg="ugv_ros" type="listener.py" name="hardware" output="screen" />
+    <node pkg="ugv_ros" type="hardware.py" name="hardware" output="screen" />
   </group>
   <!-- <node name="rviz" pkg="rviz" type="rviz" /> --> 
 
