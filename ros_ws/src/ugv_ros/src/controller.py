@@ -6,7 +6,6 @@ from numpy.linalg import solve
 import numpy as np
 
 
-
 def control_command_egorun(current_pose, goal_pose):
     k1 = 1
     k2 = 3

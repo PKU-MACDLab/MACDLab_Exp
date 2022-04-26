@@ -41,7 +41,7 @@ class Ugv(object):
         """
         Constructor.
         """
-        rospy.init_node('master', anonymous=False)
+        rospy.init_node('server', anonymous=False)
         # Get param from launch file
         self.id = rospy.get_param('id')
         self.motion = rospy.get_param('motion')
@@ -50,15 +50,15 @@ class Ugv(object):
         # TF and Rate
         self.tf = TransformListener()
         self.rate = rospy.Rate(10)
-        # Topic
+        # Topic Pub
         self.posePub = rospy.Publisher('pose', xyyaw_pose, queue_size=100)
         self.poseMsg = xyyaw_pose()
-        self.cmdVelPub = rospy.Publisher("cmd_vel", Twist, queue_size=100)
+        self.cmdVelPub = rospy.Publisher('cmd_vel', Twist, queue_size=100)
         self.cmdVelMsg = Twist()
-        # Service
+        # Service Server
         rospy.Service('goTo', GoTo, self.goToSrv)
         rospy.Service('stop', Stop, self.stopSrv)
-        # Action
+        # Action Server
         self.goToActSer = actionlib.SimpleActionServer('goTo', GoToAction, execute_cb=self.goToAct, auto_start = False)
         self.goToActSer.start()
         self.stopActSer = actionlib.SimpleActionServer('stop', StopAction, execute_cb=self.stopAct, auto_start = False)

@@ -7,8 +7,8 @@ import actionlib
 
 from ugv_ros.msg import xyyaw_pose
 from ugv_ros.srv import GoTo, GoToRequest, Stop, StopRequest
-from ugv_ros.msg import GoToAction, GoToGoal
-from ugv_ros.msg import StopAction
+from ugv_ros.msg import GoToAction, GoToGoal, StopAction
+
 
 def pose_callback(data):
     # rospy.loginfo("The +mdp4ugv+ subscribes pose: " + str(pose))
