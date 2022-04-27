@@ -73,6 +73,7 @@ class Ugv(object):
             pose(np.array[3]): current position(meters) and yaw(rad).
         """
         rospy.Subscriber('%s/pose' %(self.id), xyyaw_pose, self.pose_callback)
+        self.pose = [self.pose.x, self.pose.y, self.pose.yaw]
         return self.pose
 
     def cmdVelocity(self, vel, yawRate):
@@ -88,7 +89,7 @@ class Ugv(object):
         self.cmdVelMsg.angular.z = yawRate
         self.cmdVelPub.publish(self.cmdVelMsg)
 
-    def cmdPosition(self, pos, yaw):
+    def cmdPosition(self, pos, yaw=0.0):
         """
         Sends a streaming command of absolute position and yaw setpoint.
         Useful for slow maneuvers where a high-level planner determines the
@@ -142,7 +143,10 @@ class Ugv(object):
                 position is interpreted as absolute coordintates in the global
                 reference frame.
         """
-        self.stopAct.send_goal('None')
+        # self.stopAct.send_goal('None')
+        # response = self.stopSrv()
+        self.cmdVelocity([0.0, 0.0], 0.0)
+        rospy.sleep(0.1)
 
     def pose_callback(self, data):
         # rospy.loginfo("The +mdp4ugv+ subscribes pose: ")
