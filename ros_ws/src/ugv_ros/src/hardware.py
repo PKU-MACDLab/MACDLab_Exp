@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-#Fictitious hardware system， just for test.
+# Fictitious hardware system， just for test.
 
 import rospy
 import numpy as np

@@ -18,7 +18,7 @@ def pose_callback(data):
 if __name__ == '__main__':
 
     try:
-        rospy.init_node('test', anonymous=False)
+        rospy.init_node('ugvClient', anonymous=False)
 
         pub1 = rospy.Publisher('/ugv02/goal', xyyaw_pose, queue_size=100)
         pub2 = rospy.Publisher('/ugv01/goal', xyyaw_pose, queue_size=100)
