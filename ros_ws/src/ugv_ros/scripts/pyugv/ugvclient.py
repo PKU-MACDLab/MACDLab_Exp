@@ -28,15 +28,15 @@ class Ugv(object):
         self.id = "/ugv" + str(id).rjust(2,'0')
         # print('\n======== Construct UGV ========')
         print('== ID: %s  Type: XXXX' %(self.id))
+        # rospy.init_node('client', anonymous=False)
         # TF and Rate
         self.tf = TransformListener()
         self.rate = rospy.Rate(10)
         # Topic Pub
         self.cmdPosePub = rospy.Publisher(self.id + '/goal', xyyaw_pose, queue_size=100)
         self.cmdPoseMsg = xyyaw_pose()
-        self.cmdVelPub = rospy.Publisher(self.id +'cmd_vel', Twist, queue_size=100)
+        self.cmdVelPub = rospy.Publisher(self.id +'/cmd_vel', Twist, queue_size=100)
         self.cmdVelMsg = Twist()
-        
         # Service Client
         rospy.wait_for_service(self.id + '/goTo')
         self.goToSrv = rospy.ServiceProxy(self.id + '/goTo', GoTo)
@@ -47,7 +47,8 @@ class Ugv(object):
         self.goToAct.wait_for_server()
         self.stopAct = actionlib.SimpleActionClient(self.id + '/stop', StopAction)
         self.stopAct.wait_for_server()
-        # rospy.init_node('client', anonymous=False)
+        # Arguments
+        self.pose = xyyaw_pose()
 
     def Pose(self):
         """
@@ -62,6 +63,16 @@ class Ugv(object):
         # if yaw < 0:
         #     yaw += 2*np.pi
         self.pose = np.float64([format(p[0], '.3f'), format(p[1], '.3f'),format(yaw, '.3f')])
+        return self.pose
+
+    def PoseSub(self):
+        """
+        Returns the last true pose measurement from motion capture.
+        
+        Returns:
+            pose(np.array[3]): current position(meters) and yaw(rad).
+        """
+        rospy.Subscriber('%s/pose' %(self.id), xyyaw_pose, self.pose_callback)
         return self.pose
 
     def cmdVelocity(self, vel, yawRate):
@@ -92,7 +103,7 @@ class Ugv(object):
         self.cmdPoseMsg.yaw = yaw
         self.cmdPosePub.publish(self.cmdPoseMsg)
 
-    def goTo(self, pos, yaw, duration, relative=False):
+    def goTo(self, pos, yaw=0.0, duration=None, relative=False):
         """
         Move smoothly to the goal.
         Asynchronous command; returns immediately.
@@ -110,9 +121,12 @@ class Ugv(object):
         goal.x = pos[0]
         goal.y = pos[1]
         goal.yaw = yaw
-        self.stopAct.send_goal(goal)
-        rospy.sleep(duration)
+        self.goToAct.send_goal(goal)
         # return self.goToSrv(pos[0], pos[1], yaw)
+
+    def goToRes(self):
+        self.goToAct.wait_for_result()
+        print('\n== %s %s' %(self.id, self.goToAct.get_result()))
 
     def stop(self):
         """
@@ -129,3 +143,7 @@ class Ugv(object):
                 reference frame.
         """
         self.stopAct.send_goal('None')
+
+    def pose_callback(self, data):
+        # rospy.loginfo("The +mdp4ugv+ subscribes pose: ")
+        self.pose = data

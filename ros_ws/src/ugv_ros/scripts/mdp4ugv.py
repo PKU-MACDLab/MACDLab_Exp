@@ -48,11 +48,11 @@ if __name__ == '__main__':
         # while not rospy.is_shutdown():
         for i in range(2):
             if c % 2 == 0:
-                goal1.x += 0.5
-                goal2.x += 0.5
+                goal1.x += 0.0
+                goal2.x += 0.0
             else:
-                goal1.y += 0.5
-                goal2.y += 0.5
+                goal1.y += 0.0
+                goal2.y += 0.0
             c += 1
             # publisher1.publish(pose)
             # publisher2.publish(pose)
@@ -83,7 +83,7 @@ if __name__ == '__main__':
         stopAct1.send_goal('None')
 
         stopAct2.wait_for_server()
-        stopAct2.send_goal('None')
+        stopAct2.send_goal('None')0
 
         stopAct1.wait_for_result()
         print('\n== Ugv1 %s' %stopAct1.get_result())
