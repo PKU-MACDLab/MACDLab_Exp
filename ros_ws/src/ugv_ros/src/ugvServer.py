@@ -22,7 +22,37 @@ from ugv_ros.msg import StopAction, StopFeedback, StopResult
 class Controller(object):
     def __init__(self):
         pass
+    def xyPID(self,goal):
+        KP=1
+        KI=1
+        KD=0
+        dist_bound = 0.1
+        dt=0.02
+        print("The current pose is " + str(ugv.pose))
+        print("The goal pose is " + str(goal))
+        e=goal-ugv.pose
+        I_x=0
+        I_y=0
+        t=0
+        dist=math.hypot(goal[1]-ugv.pose[1],goal[0]-ugv.pose[0])
+        while dist>dist_bound:
+            e=goal-ugv
+            P_x=e[0]*KP
+            P_y=e[1]*KP
+            I_x=I_x+e[0]*KI
+            I_y=I_y+e[1]*KI
+            D_x=(e[0]-last2_e[0])/(2*dt)*KD
+            D_y=(e[1]-last2_e[1])/(2*dt)*KD
+            ux=P_x+I_x+D_x
+            uy=P_y+I_y+D_y
 
+            last2_e=last_e
+            last_e=e
+            ugv.cmdVelocity([ux,uy], 0)
+            rospy.sleep(dt)
+            t=t+dt
+        print("arrive")
+        
     def turn2Forward(self, goal, final_rotation=False):
         """
         Motion mode:turn and forward.
