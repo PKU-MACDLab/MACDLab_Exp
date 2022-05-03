@@ -1,4 +1,0 @@
-int8 led_id
----
-string result
-string fail_reason 
