@@ -1,0 +1,192 @@
+<launch>
+
+  <!-- navigation common params-->
+  <rosparam file="$(find turn_on_wheeltec_robot)/param_common/local_costmap_params.yaml"      command="load" ns="move_base"/>
+  <rosparam file="$(find turn_on_wheeltec_robot)/param_common/global_costmap_params.yaml"     command="load" ns="move_base"/>
+  <rosparam file="$(find turn_on_wheeltec_robot)/param_common/move_base_params.yaml"          command="load" ns="move_base"/>
+  <rosparam file="$(find turn_on_wheeltec_robot)/param_common/dwa_local_planner_params.yaml"  command="load" ns="move_base"/>
+
+  <param name="move_base/base_local_planner"    type="string" value="dwa_local_planner/DWAPlannerROS"/>
+
+  <!-- Arguments参数 -->
+  <arg name="car_mode"  default="mini_4wd" 
+       doc="opt: mini_akm, senior_akm, top_akm_bs, top_akm_dl,
+                 mini_mec,senior_mec_no, senior_mec_bs,senior_mec_dl,top_mec_bs,top_mec_dl,
+                 senior_mec_EightDrive,top_mec_EightDrive,
+                 mini_omni,senior_omni,top_omni,
+                 mini_tank, mini_diff, mini_4wd, top_diff, four_wheel_diff_bs, four_wheel_diff_dl,
+                 brushless_senior_diff"/>
+
+  <!-- car_mode and params  mini_akm-->
+  <group if="$(eval car_mode == 'mini_akm')">
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <rosparam file="$(find turn_on_wheeltec_robot)/costmap_common_params/param_mini_akm/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find turn_on_wheeltec_robot)/costmap_common_params/param_mini_akm/costmap_common_params.yaml" command="load" ns="local_costmap" />
+  </node>
+  </group>
+  
+  <!-- car_mode and params  senior_akm-->
+  <group if="$(eval car_mode == 'senior_akm')">
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <rosparam file="$(find turn_on_wheeltec_robot)/costmap_common_params/param_senior_akm/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find turn_on_wheeltec_robot)/costmap_common_params/param_senior_akm/costmap_common_params.yaml" command="load" ns="local_costmap" />
+  </node>
+  </group>
+
+  <!-- car_mode and params  top_akm_bs-->
+  <group if="$(eval car_mode == 'top_akm_bs')">
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <rosparam file="$(find turn_on_wheeltec_robot)/costmap_common_params/param_top_akm_bs/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find turn_on_wheeltec_robot)/costmap_common_params/param_top_akm_bs/costmap_common_params.yaml" command="load" ns="local_costmap" />
+  </node>
+  </group>
+
+  <!-- car_mode and params  top_akm_dl-->
+  <group if="$(eval car_mode == 'top_akm_dl')">
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <rosparam file="$(find turn_on_wheeltec_robot)/costmap_common_params/param_top_akm_dl/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find turn_on_wheeltec_robot)/costmap_common_params/param_top_akm_dl/costmap_common_params.yaml" command="load" ns="local_costmap" />
+  </node>
+  </group>
+
+  <!-- car_mode and params  mini_mec-->
+  <group if="$(eval car_mode == 'mini_mec')">
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <rosparam file="$(find turn_on_wheeltec_robot)/costmap_common_params/param_mini_mec/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find turn_on_wheeltec_robot)/costmap_common_params/param_mini_mec/costmap_common_params.yaml" command="load" ns="local_costmap" />
+  </node>
+  </group>
+
+  <!-- car_mode and params  senior_mec_no-->
+  <group if="$(eval car_mode == 'senior_mec_no')">
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <rosparam file="$(find turn_on_wheeltec_robot)/costmap_common_params/param_senior_mec_no/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find turn_on_wheeltec_robot)/costmap_common_params/param_senior_mec_no/costmap_common_params.yaml" command="load" ns="local_costmap" />
+  </node>
+  </group>
+
+  <!-- car_mode and params  senior_mec_no-->
+  <group if="$(eval car_mode == 'senior_mec_dl')">
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <rosparam file="$(find turn_on_wheeltec_robot)/costmap_common_params/param_senior_mec_dl/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find turn_on_wheeltec_robot)/costmap_common_params/param_senior_mec_dl/costmap_common_params.yaml" command="load" ns="local_costmap" />
+  </node>
+  </group>
+
+  <!-- car_mode and params  top_mec_bs-->
+  <group if="$(eval car_mode == 'top_mec_bs')">
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <rosparam file="$(find turn_on_wheeltec_robot)/costmap_common_params/param_top_mec_bs/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find turn_on_wheeltec_robot)/costmap_common_params/param_top_mec_bs/costmap_common_params.yaml" command="load" ns="local_costmap" />
+  </node>
+  </group>
+
+  <!-- car_mode and params  top_mec_dl-->
+  <group if="$(eval car_mode == 'top_mec_dl')">
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <rosparam file="$(find turn_on_wheeltec_robot)/costmap_common_params/param_top_mec_dl/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find turn_on_wheeltec_robot)/costmap_common_params/param_top_mec_dl/costmap_common_params.yaml" command="load" ns="local_costmap" />
+  </node>
+  </group>
+
+  <!-- car_mode and params  senior_mec_EightDrive-->
+  <group if="$(eval car_mode == 'senior_mec_EightDrive')">
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <rosparam file="$(find turn_on_wheeltec_robot)/costmap_common_params/param_senior_mec_EightDrive/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find turn_on_wheeltec_robot)/costmap_common_params/param_senior_mec_EightDrive/costmap_common_params.yaml" command="load" ns="local_costmap" />
+  </node>
+  </group>
+
+  <!-- car_mode and params  top_mec_EightDrive-->
+  <group if="$(eval car_mode == 'top_mec_EightDrive')">
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <rosparam file="$(find turn_on_wheeltec_robot)/costmap_common_params/param_top_mec_EightDrive/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find turn_on_wheeltec_robot)/costmap_common_params/param_top_mec_EightDrive/costmap_common_params.yaml" command="load" ns="local_costmap" />
+  </node>
+  </group>
+
+  <!-- car_mode and params  mini_omni-->
+  <group if="$(eval car_mode == 'mini_omni')">
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <rosparam file="$(find turn_on_wheeltec_robot)/costmap_common_params/param_mini_omni/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find turn_on_wheeltec_robot)/costmap_common_params/param_mini_omni/costmap_common_params.yaml" command="load" ns="local_costmap" />
+  </node>
+  </group>
+  
+  <!-- car_mode and params  senior_omni-->
+  <group if="$(eval car_mode == 'senior_omni')">
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <rosparam file="$(find turn_on_wheeltec_robot)/costmap_common_params/param_senior_omni/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find turn_on_wheeltec_robot)/costmap_common_params/param_senior_omni/costmap_common_params.yaml" command="load" ns="local_costmap" />
+  </node>
+  </group>
+
+  <!-- car_mode and params  top_omni-->
+  <group if="$(eval car_mode == 'top_omni')">
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <rosparam file="$(find turn_on_wheeltec_robot)/costmap_common_params/param_top_omni/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find turn_on_wheeltec_robot)/costmap_common_params/param_top_omni/costmap_common_params.yaml" command="load" ns="local_costmap" />
+  </node>
+  </group>
+
+  <!-- car_mode and params  mini_tank-->
+  <group if="$(eval car_mode == 'mini_tank')">
+    <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <rosparam file="$(find turn_on_wheeltec_robot)/costmap_common_params/param_mini_tank/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find turn_on_wheeltec_robot)/costmap_common_params/param_mini_tank/costmap_common_params.yaml" command="load" ns="local_costmap" />
+  </node>
+  </group>
+
+  <!-- car_mode and params  mini_diff-->
+  <group if="$(eval car_mode == 'mini_diff')">
+    <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <rosparam file="$(find turn_on_wheeltec_robot)/costmap_common_params/param_mini_diff/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find turn_on_wheeltec_robot)/costmap_common_params/param_mini_diff/costmap_common_params.yaml" command="load" ns="local_costmap" />
+  </node>
+  </group>
+
+  <!-- car_mode and params  mini_4wd-->
+  <group if="$(eval car_mode == 'mini_4wd')">
+    <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <rosparam file="$(find turn_on_wheeltec_robot)/costmap_common_params/param_mini_4wd/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find turn_on_wheeltec_robot)/costmap_common_params/param_mini_4wd/costmap_common_params.yaml" command="load" ns="local_costmap" />
+  </node>
+  </group>
+
+  <!-- car_mode and params  top_diff-->
+  <group if="$(eval car_mode == 'top_diff')">
+    <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <rosparam file="$(find turn_on_wheeltec_robot)/costmap_common_params/param_top_diff/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find turn_on_wheeltec_robot)/costmap_common_params/param_top_diff/costmap_common_params.yaml" command="load" ns="local_costmap" />
+  </node>
+  </group>
+
+  <!-- car_mode and params  four_wheel_diff_bs-->
+  <group if="$(eval car_mode == 'four_wheel_diff_bs')">
+    <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <rosparam file="$(find turn_on_wheeltec_robot)/costmap_common_params/param_four_wheel_diff_bs/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find turn_on_wheeltec_robot)/costmap_common_params/param_four_wheel_diff_bs/costmap_common_params.yaml" command="load" ns="local_costmap" />
+  </node>
+  </group>
+  
+  <!-- car_mode and params  four_wheel_diff_dl-->
+  <group if="$(eval car_mode == 'four_wheel_diff_dl')">
+    <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <rosparam file="$(find turn_on_wheeltec_robot)/costmap_common_params/param_four_wheel_diff_dl/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find turn_on_wheeltec_robot)/costmap_common_params/param_four_wheel_diff_dl/costmap_common_params.yaml" command="load" ns="local_costmap" />
+  </node>
+  </group>
+
+  <!-- car_mode and params  brushless_senior_diff-->
+  <group if="$(eval car_mode == 'brushless_senior_diff')">
+    <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <rosparam file="$(find turn_on_wheeltec_robot)/costmap_common_params/param_brushless_senior_diff/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find turn_on_wheeltec_robot)/costmap_common_params/param_brushless_senior_diff/costmap_common_params.yaml" command="load" ns="local_costmap" />
+  </node>
+  </group>
+
+  </launch>
+
+
+
+

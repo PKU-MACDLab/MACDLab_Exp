@@ -1,0 +1,22 @@
+<launch>
+  <!-- 开启机器人底层相关节点  -->
+  <include file="$(find turn_on_wheeltec_robot)/launch/turn_on_wheeltec_robot.launch" />
+
+  <!-- turn on lidar开启思岚雷达  -->
+  <include file="$(find rplidar_ros)/launch/rplidar.launch" />
+
+  <include file="$(find turn_on_wheeltec_robot)/launch/include/amcl_omni.launch" >
+   <arg name="use_map_topic" value="true"/>
+   <arg name="map_topic" value="/rtabmap/grid_map"/>
+  </include>
+
+  <!-- 开启摄像头 -->
+  <include file="$(find astra_camera)/launch/astrapro.launch" />
+
+  <!-- 开启3d导航 -->
+  <include file="$(find turn_on_wheeltec_robot)/launch/include/rtabmap_nav.launch" />
+  <param name="move_base/global_costmap/static_layer/map_topic"   type="string" value="/rtabmap/grid_map"/>
+  <param name="move_base/local_costmap/static_layer/map_topic"    type="string" value="/rtabmap/grid_map"/>
+
+</launch>
+

@@ -1,0 +1,47 @@
+<launch>
+  <!-- Arguments参数 -->
+  <arg name="slave_robot"  default="ugv04"/>
+  <arg name="car_mode"  default="mini_4wd" 
+       doc="opt: mini_akm,senior_akm,top_akm_bs,top_akm_dl,
+                 mini_mec,senior_mec_bs,senior_mec_dl,top_mec_bs,top_mec_dl,senior_mec_EightDrive,top_mec_EightDrive,
+                 mini_omni,senior_omni,top_omni,
+                 mini_4wd,mini_4wd_moveit,senior_4wd_bs,senior_4wd_dl,top_4wd_bs,top_4wd_dl,flagship_4wd_bs,flagship_4wd_dl,
+                 mini_tank,mini_diff,senior_diff,four_wheel_diff_bs,four_wheel_diff_dl, brushless_senior_diff,
+                 mini_tank_moveit,mini_mec_moveit"/>
+
+  <!--是否为akm系列车型 在语音导航功能中需要进行判断-->
+  <param name="if_akm_yes_or_no" value="no"/>
+
+
+  <!--是否开启导航功能 在导航相关文件中开启 此处默认不开启-->
+  <arg name="navigation"  default="false"/>
+  <arg name="pure3d_nav"  default="false"/>
+  <!--是否重复开启底层节点 在语音运行自主建图时开启 此处默认不开启-->
+  <arg name="repeat"  default="false"/>
+  <!--是否使用cartographer建图算法 此处默认不使用-->
+  <arg name="is_cartographer"  default="false"/>
+  <!-- arg name="odom_frame_id"  default="odom_combined"/ -->
+  
+  <group ns="$(arg slave_robot)">
+    <!-- turn on base_serial 开启底层单片机的控制节点  -->
+    <!-- base_serial.launch 文件需要修改 -->
+    <include file="$(find turn_on_wheeltec_robot)/launch/include/base_serial.launch" unless="$(arg repeat)">
+      <!--arg name="odom_frame_id"  value="$(arg odom_frame_id)"/-->
+      <arg name="slave_robot" value="$(arg slave_robot)"/>
+    </include>
+
+    <!-- 发布用于建图、导航的TF关系与小车外形可视化 -->
+    <!-- 换成 robot_model_visualization_multi.launch 文件 -->
+    <include file="$(find turn_on_wheeltec_robot)/launch/robot_model_visualization_multi.launch" unless="$(arg repeat)">
+      <arg name="car_mode" value="$(arg car_mode)"/>
+      <arg name="slave_robot" value="$(arg slave_robot)"/>
+    </include>
+    
+    <!-- 扩张卡尔曼滤波 -->
+    <!-- robot_pose_ekf.launch 文件需要修改 -->
+    <include file="$(find turn_on_wheeltec_robot)/launch/include/robot_pose_ekf.launch" unless="$(arg repeat)">
+      <arg name="is_cartographer" value="$(arg is_cartographer)"/>
+      <arg name="slave_robot" value="$(arg slave_robot)"/>
+    </include>
+  </group>
+</launch>
