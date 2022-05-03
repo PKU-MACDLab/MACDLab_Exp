@@ -1,0 +1,228 @@
+<launch>
+  <arg name="slave_robot" default=""/>
+  <arg name="car_mode"    default=""/>
+
+  <!-- 用于robot_state_publisher节点-->
+  <node pkg="tf" type="static_transform_publisher" name="base_to_link" args="0 0 0 0 0 0 $(arg slave_robot)/base_footprint $(arg slave_robot)/base_link 100" />
+
+  <!--坐标变换，需要实测 -->
+  <!--阿克曼系列 -->
+  <!-- car_mode and tf  mini_akm-->
+  <group if="$(eval car_mode == 'mini_akm')">
+   <!-- 用于rplidar_ros节点，后面同理不再赘述-->
+   <node pkg="tf" type="static_transform_publisher" name="base_to_laser" args="0.125 0.00 0.1608 3.14 0 0  $(arg slave_robot)/base_footprint $(arg slave_robot)/laser 100" />
+   <!-- 用于摄像头相关节点，如3d建图导航，后面同理不再赘述-->
+   <node pkg="tf" type="static_transform_publisher" name="base_to_camera" args="0.195 0.00 0.25 0 0 0   $(arg slave_robot)/base_footprint $(arg slave_robot)/camera_link 100" />
+  <!-- 用于robot_pose_ekf节点，后面同理不再赘述-->
+   <node pkg="tf" type="static_transform_publisher" name="base_to_gyro" args="0 0 0 0 0 0 $(arg slave_robot)/base_footprint $(arg slave_robot)/gyro_link 100" />
+  </group>
+  <!-- car_mode and tf  senior_akm-->
+  <group if="$(eval car_mode == 'senior_akm')">
+   <node pkg="tf" type="static_transform_publisher" name="base_to_laser" args="0.26 0.00 0.228 3.14 0 0  $(arg slave_robot)/base_footprint $(arg slave_robot)/laser 100" />
+   <node pkg="tf" type="static_transform_publisher" name="base_to_camera" args="0.34 0.00 0.32 0 0 0   $(arg slave_robot)/base_footprint $(arg slave_robot)/camera_link 100" />
+   <node pkg="tf" type="static_transform_publisher" name="base_to_gyro" args="0 0 0 0 0 0 $(arg slave_robot)/base_footprint $(arg slave_robot)/gyro_link 100" />
+  </group>
+  <!-- car_mode and tf  top_akm_bs-->
+  <group if="$(eval car_mode == 'top_akm_bs')">
+   <node pkg="tf" type="static_transform_publisher" name="base_to_laser" args="0.53 0.00 0.228 3.14 0 0  $(arg slave_robot)/base_footprint $(arg slave_robot)/laser 100" />
+   <node pkg="tf" type="static_transform_publisher" name="base_to_camera" args="0.51 0.00 0.32 0 0 0   $(arg slave_robot)/base_footprint $(arg slave_robot)/camera_link 100" />
+   <node pkg="tf" type="static_transform_publisher" name="base_to_gyro" args="0 0 0 0 0 0 $(arg slave_robot)/base_footprint $(arg slave_robot)/gyro_link 100" />
+  </group>
+  <!-- car_mode and tf  top_akm_dl-->
+  <group if="$(eval car_mode == 'top_akm_dl')">
+   <node pkg="tf" type="static_transform_publisher" name="base_to_laser" args="0.497 0.00 0.228 3.14 0 0  $(arg slave_robot)/base_footprint $(arg slave_robot)/laser 100" />
+   <node pkg="tf" type="static_transform_publisher" name="base_to_camera" args="0.58 0.00 0.32 0 0 0   $(arg slave_robot)/base_footprint $(arg slave_robot)/camera_link 100" />
+   <node pkg="tf" type="static_transform_publisher" name="base_to_gyro" args="0 0 0 0 0 0 $(arg slave_robot)/base_footprint $(arg slave_robot)/gyro_link 100" />
+  </group>
+ 
+  <!--麦轮系列 -->
+  <!-- car_mode and tf  mini_mec-->
+  <group if="$(eval car_mode == 'mini_mec')">
+      <!-- 用于rplidar_ros节点，后面同理不再赘述-->
+      <node pkg="tf" type="static_transform_publisher" name="base_to_laser" args="0.048 0.00 0.18 3.14 0 0  $(arg slave_robot)/base_footprint $(arg slave_robot)/laser 100" />
+      <!-- 用于摄像头相关节点，如3d建图导航，后面同理不再赘述-->
+      <node pkg="tf" type="static_transform_publisher" name="base_to_camera" args="0.118 0 0.25 0 0 0   $(arg slave_robot)/base_footprint $(arg slave_robot)/camera_link 100" />
+      <node pkg="tf" type="static_transform_publisher" name="base_to_gyro" args="0 0 0 0 0 0 $(arg slave_robot)/base_footprint $(arg slave_robot)/gyro_link 100" />
+  </group>
+  <!-- car_mode and tf  senior_mec_no-->
+  <group if="$(eval car_mode == 'senior_mec_no')">
+      <node pkg="tf" type="static_transform_publisher" name="base_to_laser" args="0.1 0.00 0.165 3.14 0 0  $(arg slave_robot)/base_footprint $(arg slave_robot)/laser 100" />
+      <node pkg="tf" type="static_transform_publisher" name="base_to_camera" args="0.18 0 0.30 0 0 0   $(arg slave_robot)/base_footprint $(arg slave_robot)/camera_link 100" />
+      <node pkg="tf" type="static_transform_publisher" name="base_to_gyro" args="0 0 0 0 0 0 $(arg slave_robot)/base_footprint $(arg slave_robot)/gyro_link 100" />
+  </group>
+  <!-- car_mode and tf  senior_mec_dl-->
+  <group if="$(eval car_mode == 'senior_mec_dl')">
+      <node pkg="tf" type="static_transform_publisher" name="base_to_laser" args="0.165 0.00 0.235 3.14 0 0  $(arg slave_robot)/base_footprint $(arg slave_robot)/laser 100" />
+      <node pkg="tf" type="static_transform_publisher" name="base_to_camera" args="0.255 0 0.35 0 0 0   $(arg slave_robot)/base_footprint $(arg slave_robot)/camera_link 100" />
+      <node pkg="tf" type="static_transform_publisher" name="base_to_gyro" args="0 0 0 0 0 0 $(arg slave_robot)/base_footprint $(arg slave_robot)/gyro_link 100" />
+  </group>
+  <!-- car_mode and tf  top_mec_bs-->
+  <group if="$(eval car_mode == 'top_mec_bs')">
+      <node pkg="tf" type="static_transform_publisher" name="base_to_laser" args="0.155 0.00 0.195 3.14 0 0  $(arg slave_robot)/base_footprint $(arg slave_robot)/laser 100" />
+      <node pkg="tf" type="static_transform_publisher" name="base_to_camera" args="0.240 0 0.32 0 0 0   $(arg slave_robot)/base_footprint $(arg slave_robot)/camera_link 100" />
+      <node pkg="tf" type="static_transform_publisher" name="base_to_gyro" args="0 0 0 0 0 0 $(arg slave_robot)/base_footprint $(arg slave_robot)/gyro_link 100" />
+  </group>
+  <!-- car_mode and tf  top_mec_dl-->
+  <group if="$(eval car_mode == 'top_mec_dl')">
+      <node pkg="tf" type="static_transform_publisher" name="base_to_laser" args="0.142 0.00 0.24 3.14 0 0  $(arg slave_robot)/base_footprint $(arg slave_robot)/laser 100" />
+      <node pkg="tf" type="static_transform_publisher" name="base_to_camera" args="0.240 0 0.36 0 0 0   $(arg slave_robot)/base_footprint $(arg slave_robot)/camera_link 100" />
+      <node pkg="tf" type="static_transform_publisher" name="base_to_gyro" args="0 0 0 0 0 0 $(arg slave_robot)/base_footprint $(arg slave_robot)/gyro_link 100" />
+  </group>
+  <!-- car_mode and tf  senior_mec_EightDrive-->
+  <group if="$(eval car_mode == 'senior_mec_EightDrive')">
+      <node pkg="tf" type="static_transform_publisher" name="base_to_laser" args="0.207 0.00 0.228 3.14 0 0  $(arg slave_robot)/base_footprint $(arg slave_robot)/laser 100" />
+      <node pkg="tf" type="static_transform_publisher" name="base_to_camera" args="0.320 0 0.20 0 0 0   $(arg slave_robot)/base_footprint $(arg slave_robot)/camera_link 100" />
+      <node pkg="tf" type="static_transform_publisher" name="base_to_gyro" args="0 0 0 0 0 0 $(arg slave_robot)/base_footprint $(arg slave_robot)/gyro_link 100" />
+  </group>
+  <!-- car_mode and tf  top_mec_EightDrive-->
+  <group if="$(eval car_mode == 'top_mec_EightDrive')">
+      <node pkg="tf" type="static_transform_publisher" name="base_to_laser" args="0.267 0.00 0.228 3.14 0 0  $(arg slave_robot)/base_footprint $(arg slave_robot)/laser 100" />
+      <node pkg="tf" type="static_transform_publisher" name="base_to_camera" args="0.320 0 0.20 0 0 0   $(arg slave_robot)/base_footprint $(arg slave_robot)/camera_link 100" />
+      <node pkg="tf" type="static_transform_publisher" name="base_to_gyro" args="0 0 0 0 0 0 $(arg slave_robot)/base_footprint $(arg slave_robot)/gyro_link 100" />
+  </group>
+
+ <!--全向轮系列 -->
+ <!-- car_mode and tf  mini_omni-->
+ <group if="$(eval car_mode == 'mini_omni')">
+      <node pkg="tf" type="static_transform_publisher" name="base_to_laser" args="0.00 0.00 0.17 3.14 0 0  $(arg slave_robot)/base_footprint $(arg slave_robot)/laser 100" />
+      <node pkg="tf" type="static_transform_publisher" name="base_to_camera" args="0.08 0.00 0.25 0 0 0   $(arg slave_robot)/base_footprint $(arg slave_robot)/camera_link 100" />
+      <node pkg="tf" type="static_transform_publisher" name="base_to_gyro" args="0 0 0 0 0 0 $(arg slave_robot)/base_footprint $(arg slave_robot)/gyro_link 100" />
+  </group>
+  <!-- car_mode and tf  senior_omni-->
+  <group if="$(eval car_mode == 'senior_omni')">
+      <node pkg="tf" type="static_transform_publisher" name="base_to_laser" args="0.087 0.00 0.23 3.14 0 0  $(arg slave_robot)/base_footprint $(arg slave_robot)/laser 100" />
+      <node pkg="tf" type="static_transform_publisher" name="base_to_camera" args="0.187 0.00 0.32 0 0 0   $(arg slave_robot)/base_footprint $(arg slave_robot)/camera_link 100" />
+      <node pkg="tf" type="static_transform_publisher" name="base_to_gyro" args="0 0 0 0 0 0 $(arg slave_robot)/base_footprint $(arg slave_robot)/gyro_link 100" />
+  </group>
+  <!-- car_mode and tf  top_omni-->
+  <group if="$(eval car_mode == 'top_omni')">
+      <node pkg="tf" type="static_transform_publisher" name="base_to_laser" args="0.149 0.00 0.23 3.14 0 0  $(arg slave_robot)/base_footprint $(arg slave_robot)/laser 100" />
+      <node pkg="tf" type="static_transform_publisher" name="base_to_camera" args="0.25 0.00 0.32 0 0 0   $(arg slave_robot)/base_footprint $(arg slave_robot)/camera_link 100" />
+      <node pkg="tf" type="static_transform_publisher" name="base_to_gyro" args="0 0 0 0 0 0 $(arg slave_robot)/base_footprint $(arg slave_robot)/gyro_link 100" />
+  </group>
+
+  <!--差速系列 -->
+  <!-- car_mode and tf  mini_tank-->
+  <group if="$(eval car_mode == 'mini_tank')">
+      <!-- 用于rplidar_ros节点，后面同理不再赘述-->
+      <node pkg="tf" type="static_transform_publisher" name="base_to_laser" args="0.02 0.00 0.155 3.1415 0 0  $(arg slave_robot)/base_footprint $(arg slave_robot)/laser 100" />
+      <!-- 用于摄像头相关节点，如3d建图导航，后面同理不再赘述-->
+      <node pkg="tf" type="static_transform_publisher" name="base_to_camera" args="0.14 0.00 0.25 0 0 0   $(arg slave_robot)/base_footprint $(arg slave_robot)/camera_link 100" />
+      <node pkg="tf" type="static_transform_publisher" name="base_to_gyro" args="0 0 0 0 0 0 $(arg slave_robot)/base_footprint $(arg slave_robot)/gyro_link 100" />
+  </group>
+  <!-- car_mode and tf  mini_diff-->
+  <group if="$(eval car_mode == 'mini_diff')">
+      <node pkg="tf" type="static_transform_publisher" name="base_to_laser" args="0.031 0.00 0.155 3.1415 0 0  $(arg slave_robot)/base_footprint $(arg slave_robot)/laser 100" />
+      <node pkg="tf" type="static_transform_publisher" name="base_to_camera" args="0.12 0.00 0.25 0 0 0   $(arg slave_robot)/base_footprint $(arg slave_robot)/camera_link 100" />
+      <node pkg="tf" type="static_transform_publisher" name="base_to_gyro" args="0 0 0 0 0 0 $(arg slave_robot)/base_footprint $(arg slave_robot)/gyro_link 100" />
+  </group>
+   <!-- car_mode and tf  mini_4wd-->
+  <group if="$(eval car_mode == 'mini_4wd')">
+      <node pkg="tf" type="static_transform_publisher" name="base_to_laser" args="0.048 0.00 0.19 3.1415 0 0  $(arg slave_robot)/base_footprint $(arg slave_robot)/laser 100" />
+      <node pkg="tf" type="static_transform_publisher" name="base_to_camera" args="0.14 0.00 0.25 0 0 0   $(arg slave_robot)/base_footprint $(arg slave_robot)/camera_link 100" />
+      <node pkg="tf" type="static_transform_publisher" name="base_to_gyro" args="0 0 0 0 0 0 $(arg slave_robot)/base_footprint $(arg slave_robot)/gyro_link 100" />
+  </group>
+  <!-- car_mode and tf  top_diff-->
+  <group if="$(eval car_mode == 'top_diff')">
+      <node pkg="tf" type="static_transform_publisher" name="base_to_laser" args="0.087 0.00 0.195 3.1415 0 0  $(arg slave_robot)/base_footprint $(arg slave_robot)/laser 100" />
+      <node pkg="tf" type="static_transform_publisher" name="base_to_camera" args="0.187 0.00 0.32 0 0 0   $(arg slave_robot)/base_footprint $(arg slave_robot)/camera_link 100" />
+      <node pkg="tf" type="static_transform_publisher" name="base_to_gyro" args="0 0 0 0 0 0 $(arg slave_robot)/base_footprint $(arg slave_robot)/gyro_link 100" />
+  </group>
+  <!-- car_mode and tf  four_wheel_diff_bs-->
+  <group if="$(eval car_mode == 'four_wheel_diff_bs')">
+      <node pkg="tf" type="static_transform_publisher" name="base_to_laser" args="0.157 0.00 0.385 3.1415 0 0  $(arg slave_robot)/base_footprint $(arg slave_robot)/laser 100" />
+      <node pkg="tf" type="static_transform_publisher" name="base_to_camera" args="0 0.00 0 0 0 0   $(arg slave_robot)/base_footprint $(arg slave_robot)/camera_link 100" />
+      <node pkg="tf" type="static_transform_publisher" name="base_to_gyro" args="0 0 0 0 0 0 $(arg slave_robot)/base_footprint $(arg slave_robot)/gyro_link 100" />
+  </group>
+  <!-- car_mode and tf  four_wheel_diff_dl-->
+  <group if="$(eval car_mode == 'four_wheel_diff_dl')">
+      <node pkg="tf" type="static_transform_publisher" name="base_to_laser" args="0.272 0.00 0.257 3.1415 0 0  $(arg slave_robot)/base_footprint $(arg slave_robot)/laser 100" />
+      <node pkg="tf" type="static_transform_publisher" name="base_to_camera" args="0 0.00 0 0 0 0   $(arg slave_robot)/base_footprint $(arg slave_robot)/camera_link 100" />
+      <node pkg="tf" type="static_transform_publisher" name="base_to_gyro" args="0 0 0 0 0 0 $(arg slave_robot)/base_footprint $(arg slave_robot)/gyro_link 100" />
+  </group>
+  <!-- car_mode and tf  brushless_senior_diff-->
+  <group if="$(eval car_mode == 'brushless_senior_diff')">
+      <node pkg="tf" type="static_transform_publisher" name="base_to_laser" args="0.160 0.00 0.130 3.1415 0 0  $(arg slave_robot)/base_footprint $(arg slave_robot)/laser 100" />
+      <node pkg="tf" type="static_transform_publisher" name="base_to_camera" args="0.160 0.00 0.200 0 0 0   $(arg slave_robot)/base_footprint $(arg slave_robot)/camera_link 100" />
+      <node pkg="tf" type="static_transform_publisher" name="base_to_gyro" args="-0.194 -0.092 0 0 0 0 $(arg slave_robot)/base_footprint $(arg slave_robot)/gyro_link 100" />
+  </group>
+  
+  <!-- URDF 标准化机器人描述格式 -->
+  <!--阿克曼系列 -->
+  <group if="$(eval car_mode == 'mini_akm')">
+   <param name = "robot_description" textfile = "$(find wheeltec_robot_urdf)/urdf/mini_akm_robot.urdf"/> 
+  </group>
+  <group if="$(eval car_mode == 'senior_akm')">
+   <param name = "robot_description" textfile = "$(find wheeltec_robot_urdf)/urdf/senior_akm_robot.urdf"/> 
+  </group>
+  <group if="$(eval car_mode == 'top_akm_bs')">
+   <param name = "robot_description" textfile = "$(find wheeltec_robot_urdf)/urdf/top_akm_bs_robot.urdf"/> 
+  </group>
+  <group if="$(eval car_mode == 'top_akm_dl')">
+   <param name = "robot_description" textfile = "$(find wheeltec_robot_urdf)/urdf/top_akm_dl_robot.urdf"/> 
+  </group>
+
+  <!--麦轮系列 -->
+  <group if="$(eval car_mode == 'mini_mec')">
+      <param name = "robot_description" textfile = "$(find wheeltec_robot_urdf)/urdf/mini_mec_robot.urdf"/> 
+  </group>
+  <group if="$(eval car_mode == 'senior_mec_no')">
+      <param name = "robot_description" textfile = "$(find wheeltec_robot_urdf)/urdf/senior_mec_robot.urdf"/> 
+  </group>
+  <group if="$(eval car_mode == 'senior_mec_dl')">
+      <param name = "robot_description" textfile = "$(find wheeltec_robot_urdf)/urdf/senior_mec_dl_robot.urdf"/> 
+  </group>
+  <group if="$(eval car_mode == 'top_mec_bs')">
+      <param name = "robot_description" textfile = "$(find wheeltec_robot_urdf)/urdf/top_mec_bs_robot.urdf"/> 
+  </group>
+  <group if="$(eval car_mode == 'top_mec_dl')">
+      <param name = "robot_description" textfile = "$(find wheeltec_robot_urdf)/urdf/top_mec_dl_robot.urdf"/> 
+  </group>
+  <group if="$(eval car_mode == 'senior_mec_EightDrive')">
+      <param name = "robot_description" textfile = "$(find wheeltec_robot_urdf)/urdf/mec_EightDrive_robot.urdf"/> 
+  </group>
+  <group if="$(eval car_mode == 'top_mec_EightDrive')">
+      <param name = "robot_description" textfile = "$(find wheeltec_robot_urdf)/urdf/mec_EightDrive_robot.urdf"/> 
+  </group>
+
+  <!--全向轮系列 -->
+  <group if="$(eval car_mode == 'mini_omni')">
+      <param name = "robot_description" textfile = "$(find wheeltec_robot_urdf)/urdf/mini_omni_robot.urdf"/> 
+  </group>
+  <group if="$(eval car_mode == 'senior_omni')">
+      <param name = "robot_description" textfile = "$(find wheeltec_robot_urdf)/urdf/senior_omni_robot.urdf"/> 
+  </group>
+  <group if="$(eval car_mode == 'top_omni')">
+      <param name = "robot_description" textfile = "$(find wheeltec_robot_urdf)/urdf/top_omni_robot.urdf"/> 
+  </group>
+
+  <!--差速系列 -->
+  <group if="$(eval car_mode == 'mini_tank')">
+  <param name = "robot_description" textfile = "$(find wheeltec_robot_urdf)/urdf/mini_diff_robot.urdf"/> 
+  </group>
+  <group if="$(eval car_mode == 'mini_diff')">
+  <param name = "robot_description" textfile = "$(find wheeltec_robot_urdf)/urdf/mini_diff_robot.urdf"/> 
+  </group>
+  <group if="$(eval car_mode == 'mini_4wd')">
+  <param name = "robot_description" textfile = "$(find wheeltec_robot_urdf)/urdf/mini_4wd_robot.urdf"/> 
+  </group>
+  <group if="$(eval car_mode == 'top_diff')">
+  <param name = "robot_description" textfile = "$(find wheeltec_robot_urdf)/urdf/top_diff_robot.urdf"/> 
+  </group>
+  <group if="$(eval car_mode == 'four_wheel_diff_bs')">
+  <param name = "robot_description" textfile = "$(find wheeltec_robot_urdf)/urdf/four_wheel_diff_robot.urdf"/> 
+  </group>
+  <group if="$(eval car_mode == 'four_wheel_diff_dl')">
+  <param name = "robot_description" textfile = "$(find wheeltec_robot_urdf)/urdf/four_wheel_diff_robot.urdf"/> 
+  </group>
+  <group if="$(eval car_mode == 'brushless_senior_diff')">
+  <param name = "robot_description" textfile = "$(find wheeltec_robot_urdf)/urdf/brushless_senior_diff.urdf"/> 
+  </group>
+
+  <!-- 读取urdf信息(robot_description) 发布话题：/joint_states-->
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+  <!-- 订阅话题：/joint_states，发布小车TF信息-->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+
+ </launch>
+
