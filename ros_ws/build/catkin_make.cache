@@ -1,0 +1,2 @@
+crazyflie_tools:crazyswarm:externalDependencies/libobjecttracker:ugv_ros
+-DCATKIN_DEVEL_PREFIX=/home/ica/MACDLab_Exp/ros_ws/devel -DCMAKE_INSTALL_PREFIX=/home/ica/MACDLab_Exp/ros_ws/install -G Unix Makefiles

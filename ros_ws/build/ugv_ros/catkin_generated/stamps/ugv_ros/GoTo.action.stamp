@@ -1,0 +1,12 @@
+#goal definition
+float64 x
+float64 y
+float64 yaw
+---
+#result definition
+string result
+---
+#feedback
+float64[] x
+float64[] y
+float64[] yaw

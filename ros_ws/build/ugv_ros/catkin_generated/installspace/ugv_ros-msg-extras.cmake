@@ -1,0 +1,2 @@
+set(ugv_ros_MESSAGE_FILES "msg/xyyaw_pose.msg;msg/GoToAction.msg;msg/GoToActionGoal.msg;msg/GoToActionResult.msg;msg/GoToActionFeedback.msg;msg/GoToGoal.msg;msg/GoToResult.msg;msg/GoToFeedback.msg;msg/StopAction.msg;msg/StopActionGoal.msg;msg/StopActionResult.msg;msg/StopActionFeedback.msg;msg/StopGoal.msg;msg/StopResult.msg;msg/StopFeedback.msg")
+set(ugv_ros_SERVICE_FILES "srv/GoTo.srv;srv/Stop.srv")
